@@ -112,11 +112,14 @@ char *dec_to_any(const int num, const unsigned int base) {
 }
 
 int any_to_dec(const char *str, const unsigned int base) {
-    size_t length = strlen(str);
-    unsigned long result = 0;
+    int result = 0;
 
-    for (size_t i = length; i != 0; i--) {
-        result += get_dec_by_char(str[length - i]) * pow(base, i - 1);
+    if (validate_base(str, base)) {
+        size_t length = strlen(str);
+        
+        for (size_t i = length; i != 0; i--) {
+            result += get_dec_by_char(str[length - i]) * pow(base, i - 1);
+        }
     }
 
     return result;
