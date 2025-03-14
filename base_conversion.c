@@ -5,6 +5,18 @@
 
 #include "base_conversion.h"
 
+#define TRUE    1
+#define FALSE   0
+
+int validate_base(const char *str, const unsigned int base) {
+    for (size_t i = 0; i < strlen(str); i++) {
+        if (get_dec_by_char(str[i]) >= base) {
+            return FALSE;
+        }
+    }
+    return TRUE;
+}
+
 unsigned int get_dec_by_char(const char digit) {
     unsigned int res = 0;
     switch (digit) {
@@ -64,8 +76,9 @@ unsigned int get_dec_by_char(const char digit) {
 }
 
 char *reverse_str(const char *str) {
-    if (!str)
+    if (!str) {
         return NULL;
+    }
 
     size_t length = strlen(str);
     char *reversed_str = (char *)calloc(length, sizeof(char));
@@ -77,14 +90,15 @@ char *reverse_str(const char *str) {
     return reversed_str;
 }
 
-char *dec_to_any(const unsigned long num, const unsigned int base) {
-    if (base > 16 || base < 2)
+char *dec_to_any(const int num, const unsigned int base) {
+    if (base > 16 || base < 2) {
         return NULL;
+    }
 
     char *str = (char *)malloc(sizeof(char));
     str[0] = '\0';
 
-    unsigned long cpy_num = num;
+    int cpy_num = num;
     do {
         char digit[2];
         digit[0] = DIGITS_CHAR[cpy_num % base];
@@ -97,12 +111,25 @@ char *dec_to_any(const unsigned long num, const unsigned int base) {
     return reverse_str(str);
 }
 
-unsigned long any_to_dec(const char *str, const unsigned int base) {
+int any_to_dec(const char *str, const unsigned int base) {
     size_t length = strlen(str);
     unsigned long result = 0;
+
     for (size_t i = length; i != 0; i--) {
         result += get_dec_by_char(str[length - i]) * pow(base, i - 1);
     }
 
     return result;
+}
+
+int main() {
+    const char str[] = "341234AB";
+    for (int i = 2; i < 17; i++) {
+        printf("%d\n", validate_base(str, i));
+    }
+
+    int num = 0;
+    printf("%s\n", dec_to_any(num, 2));
+
+    return 0;
 }

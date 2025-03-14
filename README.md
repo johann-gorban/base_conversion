@@ -15,4 +15,4 @@ const char *hex_num = dec_to_any(dec_num, 16);
 
 
 ## Future updates
-- negative numbers support
+- negative numbers support [done]
