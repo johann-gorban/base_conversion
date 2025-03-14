@@ -121,15 +121,3 @@ int any_to_dec(const char *str, const unsigned int base) {
 
     return result;
 }
-
-int main() {
-    const char str[] = "341234AB";
-    for (int i = 2; i < 17; i++) {
-        printf("%d\n", validate_base(str, i));
-    }
-
-    int num = 0;
-    printf("%s\n", dec_to_any(num, 2));
-
-    return 0;
-}
