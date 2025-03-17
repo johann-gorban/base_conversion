@@ -1,3 +1,13 @@
+#pragma once
+
+#include <string.h>
+#include <stdlib.h>
+#include <math.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 const char DIGITS_CHAR[] = {
     '0',
     '1',
@@ -31,3 +41,7 @@ int any_to_dec(const char *, const unsigned int);
 
 // Function to validate string as number with the given base
 int validate_base(const char *, const unsigned int);
+
+#ifdef __cplusplus
+}
+#endif
