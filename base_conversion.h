@@ -38,6 +38,9 @@ int any_to_dec(const char *, const unsigned int);
 // Function to validate string as number with the given base
 int validate_base(const char *, const unsigned int);
 
+
 #ifdef __cplusplus
 }
 #endif
+// Function to convert string to integer
+int str_to_int(const char *);

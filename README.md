@@ -19,3 +19,6 @@ To convert your number from binary to hexidecimal system:
 unsigned long dec_num = any_to_dec(your_num_as_str, 2);
 const char *hex_num = dec_to_any(dec_num, 16);
 ```
+## Future updates
+- negative numbers support [done]
+- check how big num is (overflow)
