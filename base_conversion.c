@@ -3,32 +3,15 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <stdio.h>
 
 #define TRUE 1
 #define FALSE 0
 
-const char DIGITS_CHAR[] = {
-    '0',
-    '1',
-    '2',
-    '3',
-    '4',
-    '5',
-    '6',
-    '7',
-    '8',
-    '9',
-    'A',
-    'B',
-    'C',
-    'D',
-    'E',
-    'F'
-};
-
 unsigned int get_dec_by_char(const char digit) {
     unsigned int res = 0;
     switch (digit) {
+    // Default digits
     case '0': res = 0; break;
     case '1': res = 1; break;
     case '2': res = 2; break;
@@ -39,12 +22,23 @@ unsigned int get_dec_by_char(const char digit) {
     case '7': res = 7; break;
     case '8': res = 8; break;
     case '9': res = 9; break;
+
+    // Upper case
     case 'A': res = 10; break;
     case 'B': res = 11; break;
     case 'C': res = 12; break;
     case 'D': res = 13; break;
     case 'E': res = 14; break;
     case 'F': res = 15; break;
+    
+    // Lower case
+    case 'a': res = 10; break;
+    case 'b': res = 11; break;
+    case 'c': res = 12; break;
+    case 'd': res = 13; break;
+    case 'e': res = 14; break;
+    case 'f': res = 15; break;
+
     default: res = 0; break;
     }
     return res;
@@ -111,7 +105,7 @@ int any_to_dec(const char *str, const unsigned int base) {
         size_t length = strlen(str);
 
         for (size_t i = length; i != 0; i--) {
-            result += (str[length - i] - '0') * pow(base, i - 1);
+            result += get_dec_by_char(str[length - i]) * pow(base, i - 1);
         }
     }
 
@@ -135,4 +129,10 @@ int str_to_int(const char *str) {
         }
     }
     return num;
+}
+
+int main() {
+    printf("%d\n", any_to_dec("7F", 16));
+    printf("%d\n", any_to_dec("7f", 16));
+    return 0;
 }
