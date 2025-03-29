@@ -130,9 +130,3 @@ int str_to_int(const char *str) {
     }
     return num;
 }
-
-int main() {
-    printf("%d\n", any_to_dec("7F", 16));
-    printf("%d\n", any_to_dec("7f", 16));
-    return 0;
-}
