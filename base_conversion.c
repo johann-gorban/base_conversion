@@ -3,10 +3,28 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include <stdio.h>
 
 #define TRUE 1
 #define FALSE 0
+
+const char DIGITS_CHAR[] = {
+    '0',
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    'A',
+    'B',
+    'C',
+    'D',
+    'E',
+    'F'
+};
 
 unsigned int get_dec_by_char(const char digit) {
     unsigned int res = 0;
@@ -23,14 +41,14 @@ unsigned int get_dec_by_char(const char digit) {
     case '8': res = 8; break;
     case '9': res = 9; break;
 
-    // Upper case
+        // Upper case
     case 'A': res = 10; break;
     case 'B': res = 11; break;
     case 'C': res = 12; break;
     case 'D': res = 13; break;
     case 'E': res = 14; break;
     case 'F': res = 15; break;
-    
+
     // Lower case
     case 'a': res = 10; break;
     case 'b': res = 11; break;

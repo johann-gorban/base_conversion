@@ -4,25 +4,6 @@
 extern "C" {
 #endif
 
-const char DIGITS_CHAR[] = {
-    '0',
-    '1',
-    '2',
-    '3',
-    '4',
-    '5',
-    '6',
-    '7',
-    '8',
-    '9',
-    'A',
-    'B',
-    'C',
-    'D',
-    'E',
-    'F'
-};
-
 // Function to reverse the string
 char *reverse_str(const char *);
 
@@ -38,9 +19,9 @@ int any_to_dec(const char *, const unsigned int);
 // Function to validate string as number with the given base
 int validate_base(const char *, const unsigned int);
 
+// Function to convert string to integer
+int str_to_int(const char *);
 
 #ifdef __cplusplus
 }
 #endif
-// Function to convert string to integer
-int str_to_int(const char *);
