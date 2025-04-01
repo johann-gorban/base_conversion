@@ -4,6 +4,11 @@
 #include <string.h>
 #include <math.h>
 
+#include <stdio.h>
+#include <ctype.h>
+#include <stdint.h>
+#include <limits.h>
+
 #define TRUE 1
 #define FALSE 0
 
@@ -62,6 +67,70 @@ unsigned int get_dec_by_char(const char digit) {
     return res;
 }
 
+
+int fits_in_32_bits(const char* str, unsigned int base) {
+    if (base < 2 || base > 16) return 0;
+
+    int is_negative = 0;
+    const char* num_start = str;
+
+    if (*num_start == '-') {
+        if (base != 10) return 0;
+        is_negative = 1;
+        num_start++;
+    } else if (*num_start == '+') {
+        num_start++;
+    }
+
+    if (*num_start == '\0') return 0;
+
+    uint32_t max_val;
+    if (base == 10) {
+        if (is_negative) {
+            max_val = 2147483648U;
+        } else {
+            max_val = INT32_MAX;
+        }
+    } else {
+        max_val = UINT32_MAX;
+    }
+
+    uint32_t value = 0;
+    uint32_t max_div_base = max_val / base;
+
+    for (const char* p = num_start; *p != '\0'; p++) {
+        if (*p == '-' && base != 10) {
+            is_negative = 1;
+            continue;
+        }
+
+        int digit;
+        if (isdigit(*p)) {
+            digit = *p - '0';
+        } else if (isupper(*p)) {
+            digit = *p - 'A' + 10;
+        } else if (islower(*p)) {
+            digit = *p - 'a' + 10;
+        } else {
+            return 0;  // Недопустимый символ
+        }
+
+        if (digit >= base) return 0;
+
+        if (value > max_div_base) return 0;
+        value *= base;
+
+        if (value > max_val - digit) return 0;
+        value += digit;
+    }
+
+    if (is_negative && base != 10) {
+        if (value > 2147483648U) return 0;
+    }
+
+    return 1;
+}
+
 int validate_base(const char *str, const unsigned int base) {
     for (size_t i = 0; i < strlen(str); i++) {
         if (base == 10 && str[0] == '-'){
@@ -74,19 +143,14 @@ int validate_base(const char *str, const unsigned int base) {
     return TRUE;
 }
 
-char *reverse_str(const char *str) {
-    if (!str) {
-        return NULL;
+void reverse_str(char *start, char *end) {
+    while (start < end) {
+        char temp = *start;
+        *start = *end;
+        *end = temp;
+        start++;
+        end--;
     }
-
-    size_t length = strlen(str);
-    char *reversed_str = (char *)calloc(length, sizeof(char));
-
-    for (size_t i = length; i != 0; i--) {
-        reversed_str[length - i] = str[i - 1];
-    }
-
-    return reversed_str;
 }
 
 char *dec_to_any(const int num, const unsigned int base) {
@@ -94,7 +158,7 @@ char *dec_to_any(const int num, const unsigned int base) {
         return NULL;
     }
 
-    char *str = (char *)malloc(sizeof(char) * 65);
+    char *str = (char *)malloc(sizeof(char) * 33);
     str[0] = '\0';
 
     int coef = (num < 0 && base == 10) ? -1 : 1;
@@ -113,7 +177,9 @@ char *dec_to_any(const int num, const unsigned int base) {
         strcat(str, "-\0");
     }
 
-    return reverse_str(str);
+    reverse_str(str, str + strlen(str) - 1);
+
+    return str;
 }
 
 int any_to_dec(const char *str, const unsigned int base) {
